@@ -1,16 +1,35 @@
-const setUp = (graph, xLength) => {
+const setUp = (graph, xLength, firstRun) => {
+    let width, height;
+    if(firstRun) {
+        width = graph.width * window.devicePixelRatio;
+        height = graph.height * window.devicePixelRatio;
+    } else {
+        width = graph.width;
+        height = graph.height;
+    }
+    graph.width = width;
+    graph.height = height;
+
+    let ctx = graph.getContext('2d');
+    drawGraphBackground(graph, xLength);
     
-    const ctx = graph.getContext("2d");
-    const height = graph.height;
+    
+}
+const drawGraphBackground = (graph, xLength) => {
+
+    const ctx = graph.getContext('2d');
     const width = graph.width;
+    const height = graph.height;
     const scale = (width/xLength);
     const yLength = Math.floor(height/scale);
+    
+    // ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
 
     const lineWidth = 0.1;
     ctx.lineWidth = lineWidth;
 
-    console.log("in graph.js, xLength: " + xLength);
-    console.log("in graph.js, yLength: " + yLength);
+    console.log("in graph.js, canvas width: " + width);
+    console.log("in graph.js, height: " + height);
 
     let xPoints = [];
     for(let i = 0; i < xLength; i++) {
@@ -61,15 +80,14 @@ const setUp = (graph, xLength) => {
         ctx.stroke();
         
     }
-    
 }
 const graph = (points, canvas, xLength) => {
     
     let ctx = canvas.getContext("2d");
     
-
     const height = canvas.height;
     const width = canvas.width;
+    console.log('In graph.js/graph(), widthxheight = '+width+"x"+height);
     const scale = (width/xLength);
     const yLength = Math.floor(height/scale);
 
@@ -83,7 +101,7 @@ const graph = (points, canvas, xLength) => {
     
    ctx.beginPath();
    ctx.strokeStyle = "red";
-   ctx.lineWidth = 0.1;
+   ctx.lineWidth = 0.5;
     for(let i = 0; i < pxPoints.length-1; i++) {
         ctx.moveTo(pxPoints[i].x, pxPoints[i].y);
         ctx.lineTo(pxPoints[i+1].x, pxPoints[i+1].y); ctx.stroke();

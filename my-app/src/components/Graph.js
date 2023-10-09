@@ -7,6 +7,7 @@ export default function Graph({ functProp }) {
 
     const [ f, setF ] = useState(() => {});
     const [ xLength, setXLength ] = useState(40);
+    const [ firstRun, setFirstRun ] = useState(true);
 
     if(f) {
         console.log("Graph.js, f(3): " + f(3));
@@ -29,7 +30,9 @@ export default function Graph({ functProp }) {
     //Only on startup, not on rerender
     useEffect(() => {
         GraphFunctions.clearGraph(document.getElementById('myCanvas'), xLength);
-        GraphFunctions.setUp(document.getElementById('myCanvas'), xLength);
+        let canvas = document.getElementById('myCanvas')
+        GraphFunctions.setUp(canvas, xLength, firstRun);
+        setFirstRun(false);
     }, []);
     
     
