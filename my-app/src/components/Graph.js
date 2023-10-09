@@ -6,7 +6,7 @@ import GraphFunctions from '../math/graph.js'
 export default function Graph({ functProp }) {
 
     const [ f, setF ] = useState(() => {});
-    const [ xLength, setXLength ] = useState(40);
+    const [ xLength, setXLength ] = useState(4);
     const [ firstRun, setFirstRun ] = useState(true);
 
     if(f) {
@@ -34,16 +34,24 @@ export default function Graph({ functProp }) {
         GraphFunctions.setUp(canvas, xLength, firstRun);
         setFirstRun(false);
     }, []);
+    useEffect(() => {
+
+    }, [ xLength ]);
     
-    
+    const handleZoomIn = () => {
+        setXLength(xLength - 2);
+    }
+    const handleZoomOut = () => {
+        setXLength(xLength + 2);
+    }
 
     return(
         <div id="graph-wrapper">
+            
             <canvas id="myCanvas" width={'863.39'} height={'606'} ></canvas>
-            {/* <button onClick={(e) => {
-                setXLength(xLength + 2);
-            }}>+</button> */}
-            <Sidebar handleGraphClickProp={handleGraphClick}/>
+            
+            <Sidebar handleGraphClickProp={handleGraphClick} handleZoomInProp={handleZoomIn} handleZoomOutProp={handleZoomOut} />
+            
         </div>
         
     )

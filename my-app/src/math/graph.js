@@ -21,15 +21,12 @@ const drawGraphBackground = (graph, xLength) => {
     const width = graph.width;
     const height = graph.height;
     const scale = (width/xLength);
-    const yLength = Math.floor(height/scale);
-    
-    // ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    const yLength = findYLength(height, scale).yLength;
+    const yTopDiff = findYLength(height, scale).topDiff;
+
 
     const lineWidth = 0.1;
     ctx.lineWidth = lineWidth;
-
-    console.log("in graph.js, canvas width: " + width);
-    console.log("in graph.js, height: " + height);
 
     let xPoints = [];
     for(let i = 0; i < xLength; i++) {
@@ -37,15 +34,17 @@ const drawGraphBackground = (graph, xLength) => {
         xPoints.push(xVal);
     }
     let yPoints = [];
-    for(let i = 0; i < yLength; i++) {
-        let yVal = (height/yLength)*i;
+    for(let i = 0; i < yLength+2; i++) {
+        const yDiffVal = yTopDiff*scale;
+        const yVal = (scale*i)+yDiffVal;
         yPoints.push(yVal);
+        
     }
+    
 
     for(let i = 0; i < xPoints.length; i++) {
         ctx.beginPath();
         if(i === xLength/2) {
-            //ctx.beginPath();
             ctx.strokeStyle = "black";
             ctx.moveTo(xPoints[i], 0);
             ctx.lineWidth = 3;
@@ -65,7 +64,6 @@ const drawGraphBackground = (graph, xLength) => {
     for(let i = 0; i < yPoints.length; i++) {
         ctx.beginPath();
         if(i === yLength/2) {
-            //ctx.beginPath();
             ctx.moveTo(0, yPoints[i]);
             ctx.lineTo(width, yPoints[i]);
             ctx.lineWidth = 3;
@@ -89,7 +87,7 @@ const graph = (points, canvas, xLength) => {
     const width = canvas.width;
     console.log('In graph.js/graph(), widthxheight = '+width+"x"+height);
     const scale = (width/xLength);
-    const yLength = Math.floor(height/scale);
+    const yLength = findYLength(height, scale);
 
     let pxPoints = [];
     for(let i = 0; i < points.length; i++) {
@@ -122,7 +120,7 @@ const zoomIn = (canvas, xLength) => {
     setUp(canvas, xLength+2);
 }
 
-
+//Helpers
 const convertToPx = (point, scale, width, height) => {
     let xMidInPx = width/2;
     let yMidInPx = height/2;
@@ -147,4 +145,16 @@ const convertToPx = (point, scale, width, height) => {
     
     return pxPoint;
 }
+const findYLength = (height, scale) => {
+    let yLength = Math.floor(height/scale);
+    if(yLength % 2 !== 0) {
+        yLength--;
+    }
+
+    let diff = (height/scale)-yLength;
+    let topDiff = diff/2;
+    
+    return { yLength, topDiff };
+}
+
 module.exports = { setUp, graph, clearGraph, zoomIn };
