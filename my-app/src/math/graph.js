@@ -13,7 +13,6 @@ const setUp = (graph, xLength, firstRun) => {
     let ctx = graph.getContext('2d');
     drawGraphBackground(graph, xLength);
     
-    
 }
 const drawGraphBackground = (graph, xLength) => {
 
@@ -25,7 +24,7 @@ const drawGraphBackground = (graph, xLength) => {
     const yTopDiff = findYLength(height, scale).topDiff;
 
 
-    const lineWidth = 0.1;
+    const lineWidth = 0.3;
     ctx.lineWidth = lineWidth;
 
     let xPoints = [];
@@ -110,14 +109,10 @@ const graph = (points, canvas, xLength) => {
     
 }
 const clearGraph = (canvas, xLength) => {
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     setUp(canvas, xLength);
     console.log(canvas.width + " " + canvas.height);
-}
-const zoomIn = (canvas, xLength) => {
-    clearGraph(canvas);
-    setUp(canvas, xLength+2);
 }
 
 //Helpers
@@ -157,4 +152,4 @@ const findYLength = (height, scale) => {
     return { yLength, topDiff };
 }
 
-module.exports = { setUp, graph, clearGraph, zoomIn };
+module.exports = { setUp, graph, clearGraph };

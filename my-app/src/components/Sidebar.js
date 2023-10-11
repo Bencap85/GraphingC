@@ -2,7 +2,7 @@ import React, { state, useState } from 'react'
 import '../App.css'
 import Expr from "../math/expr.js" 
 
-export default function Sidebar({ handleGraphClickProp, handleZoomInProp, handleZoomOutProp }) {
+export default function Sidebar({ handleGraphClickProp }) {
     const [ input, setInput ] = useState("");
     const [ expanded, setExpanded ] = useState(true);
 
@@ -47,8 +47,7 @@ export default function Sidebar({ handleGraphClickProp, handleZoomInProp, handle
                     console.log("On click ran, input: " + input);
                     handleGraphClickProp(f);
                 }}>Show Graph</button>
-                <button onClick={handleZoomInProp} >+</button>
-                <button onClick={handleZoomOutProp} >-</button>
+                
             </div>
                 
             
