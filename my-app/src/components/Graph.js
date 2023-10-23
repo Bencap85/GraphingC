@@ -17,9 +17,6 @@ export default function Graph({ functProp }) {
     const [ value, setValue ] = useState({scale: 1, 
                                           translation: { x: 0, y: 0 }
                                           
-                                        
-                                          
-                                        
                                         });
 
     //Only on startup, not on rerender
@@ -49,7 +46,7 @@ export default function Graph({ functProp }) {
     const checkForF = () => {
         if(f) {
             let points = [];
-            for(let i = -1*(xLength/2)-xOffset; i <= (xLength/2)-xOffset; i += 0.25) {
+            for(let i = -1*(xLength/2)-xOffset; i <= (xLength/2)-xOffset; i += (xLength? xLength/200: 10)) {
                 points.push({ x: i, y: f(i)-yOffset });
             } 
             graphObject.clearAndDrawBackground();
