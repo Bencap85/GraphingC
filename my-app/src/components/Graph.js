@@ -7,19 +7,16 @@ import { MapInteractionCSS } from 'react-map-interaction'
 export default function Graph({ functProp }) {
 
     const [ f, setF ] = useState(() => {});
-    const [ xLength, setXLength ] = useState(6);
+    const [ xLength, setXLength ] = useState(12);
     const [ xOffset, setXOffset ] = useState(0);
     const [ yOffset, setYOffset ] = useState(0);
-    const [ yAxisPanRetardantFactor, setYAxisPanRetardantFactor ] = useState(4);
+    const [ yAxisPanRetardantFactor, setYAxisPanRetardantFactor ] = useState(3);
     const [ yAxisPanCounter, setYAxisPanCounter ] = useState(0);
     const [ graphObject, setGraphObject ] = useState(null);
     const [ firstRun, setFirstRun ] = useState(true);
     const [ value, setValue ] = useState({scale: 1, 
                                           translation: { x: 0, y: 0 }
                                           
-                                        
-                                          
-                                        
                                         });
 
     //Only on startup, not on rerender
@@ -36,7 +33,6 @@ export default function Graph({ functProp }) {
         console.log("Re rendered");
         console.log("XOffset: " + xOffset);
         console.log("YOffset: " + yOffset);
-        console.log("PanCounter: " + yAxisPanCounter);
         if(graphObject) {
             graphObject.xLength = xLength;
             graphObject.xOffset = xOffset;
@@ -49,7 +45,7 @@ export default function Graph({ functProp }) {
     const checkForF = () => {
         if(f) {
             let points = [];
-            for(let i = -1*(xLength/2)-xOffset; i <= (xLength/2)-xOffset; i += 0.25) {
+            for(let i = -1*(xLength/2)-xOffset; i <= (xLength/2)-xOffset; i += (xLength? xLength/200: 10)) {
                 points.push({ x: i, y: f(i)-yOffset });
             } 
             graphObject.clearAndDrawBackground();
@@ -96,12 +92,10 @@ export default function Graph({ functProp }) {
                 onChange={(newValue) => {
                     console.log(JSON.stringify(newValue));
                         if(newValue.scale < value.scale) /*Zoomed Out*/ {
-                            console.log("Zoomed Out");
                             newValue.translation.x = value.translation.x;
                             newValue.translation.y = value.translation.y;
                             handleZoomOut();
                         } else if(newValue.scale > value.scale) /*Zoomed In*/ {
-                            console.log("Zoomed In");
                             newValue.translation.x = value.translation.x;
                             newValue.translation.y = value.translation.y;
                             handleZoomIn();
@@ -151,4 +145,6 @@ export default function Graph({ functProp }) {
         
     )
 }
+
+
 

@@ -25,7 +25,6 @@ export default function Sidebar({ handleGraphClickProp }) {
                             clearInterval(interval);
                             
                         }
-                        console.log("sidebar: " + sidebar.style.marginTop);
                         sidebar.style.top = sidebar.style.top + 2;
                     }, 1000);
                 }} >                   </button>
@@ -44,7 +43,6 @@ export default function Sidebar({ handleGraphClickProp }) {
             <div>
                 <button id="show-graph-btn" onClick={() => {
                     let f = Expr.exprToFunction(input);
-                    console.log("On click ran, input: " + input);
                     handleGraphClickProp(f);
                 }}>Show Graph</button>
                 
